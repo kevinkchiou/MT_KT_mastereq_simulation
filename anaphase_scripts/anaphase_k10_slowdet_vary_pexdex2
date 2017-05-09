@@ -1,0 +1,26 @@
+#! /home/ebanigan/kineto/master_eq/
+#$ -cwd
+#$ -t 1-3
+trial=$(echo "scale=0; ($SGE_TASK_ID+2465);" | bc)
+restart=$(echo "scale=0; (0);" | bc)
+nsteps=$(echo "scale=0; (15000);" | bc)
+nskip=$(echo "scale=0; (4000);" | bc)
+box=$(echo "scale=0; (2000);" | bc)
+monos=$(echo "scale=2; (1);" | bc)
+initfil=$(echo "scale=0; (1000);" | bc)
+polym=$(echo "scale=8; (0.07);" | bc)
+depolym=$(echo "scale=8; (2.0);" | bc)
+res=$(echo "scale=8; (0.002);" | bc)
+cat=$(echo "scale=8; (0.0003);" | bc)
+att=$(echo "scale=8; (0.02);" | bc)
+det=$(echo "scale=8; (0.00001);" | bc)
+polymexp=$(echo "scale=4; (0.1);" | bc)
+depolymexp=$(echo "scale=4; (-0.1-0.1*$SGE_TASK_ID);" | bc)
+resexp=$(echo "scale=3; (0.2);" | bc)
+catexp=$(echo "scale=3; (-0.3);" | bc)
+initfilconc=$(echo "scale=2; (82.);" | bc)
+attrange=$(echo "scale=4; (20.0);" | bc)
+kmspring=$(echo "scale=4; (10.);" | bc)
+load=$(echo "scale=4; (0.0);" | bc)
+nohup ./single_kt_const_attdet_5e-4dt -t $trial -n $nsteps -s $nskip -l $box -f $monos -i $initfil -p $polym -d $depolym -r $res -c $cat -o $att -u $det -w $polymexp -x $depolymexp -y $resexp -z $catexp -b $initfilconc -k $kmspring -e $restart -g $attrange -m $load
+

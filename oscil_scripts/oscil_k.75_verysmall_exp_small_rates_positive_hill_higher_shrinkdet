@@ -1,0 +1,26 @@
+#! /data0/home/kchiou/kineto/master_eq/oscil_scripts/
+#$ -cwd
+#$ -t 1-7
+trial=$(echo "scale=0; ($SGE_TASK_ID+2689);" | bc)
+restart=$(echo "scale=0; (0);" | bc)
+nsteps=$(echo "scale=0; (100000);" | bc)
+nskip=$(echo "scale=0; (4000);" | bc)
+box=$(echo "scale=0; (2000);" | bc)
+monos=$(echo "scale=2; (1);" | bc)
+polym=$(echo "scale=8; (0.031);" | bc)
+depolym=$(echo "scale=8; (.29);" | bc)
+res=$(echo "scale=8; (0.0008);" | bc)
+cat=$(echo "scale=8; (0.000069);" | bc)
+att=$(echo "scale=8; (0.02);" | bc)
+det=$(echo "scale=8; (0.00001);" | bc)
+shrinkdetfactor=$(echo "scale=4; (100.0);" | bc)
+polymexp=$(echo "scale=5; (0.01);" | bc)
+depolymexp=$(echo "scale=5; (-0.02);" | bc)
+resexp=$(echo "scale=5; (0.015);" | bc)
+catexp=$(echo "scale=5; (-0.02);" | bc)
+initfilconc=$(echo "scale=3; (35);" | bc)
+kmspring=$(echo "scale=2; (.75);" | bc)
+kkspring=$(echo "scale=2; (0.25+0.25*$SGE_TASK_ID*$SGE_TASK_ID);" | bc)
+attrange=$(echo "scale=2; (20.);" | bc)
+att=$(echo "scale=8; (0.02);" | bc)
+nohup ./double_kt_asym_const_attdet_5e-4dt -t $trial -n $nsteps -s $nskip -l $box -f $monos -p $polym -d $depolym -r $res -c $cat -w $polymexp -x $depolymexp -y $resexp -z $catexp -b $initfilconc -k $kmspring -h $kkspring -e $restart -u $det -g $attrange -o $att -U $shrinkdetfactor
